@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">PaperStock</string>
+    <string name="paper_stock">Paper Stock</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="remember_me">Remember me</string>
+    <string name="login">Login</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="trades">Trades</string>
+    <string name="portfolio">Portfolio</string>
+    <string name="account">Account</string>
+</resources>

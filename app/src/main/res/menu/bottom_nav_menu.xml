@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/watchListBtn"
+        android:icon="@drawable/ic_indian_rupee_symbol"
+        android:title="@string/watchlist" />
+
+    <item
+        android:id="@+id/tradeBtn"
+        android:icon="@drawable/ic_baseline_markunread_mailbox_24"
+        android:title="@string/trades" />
+
+    <item
+        android:id="@+id/portfolioBtn"
+        android:icon="@drawable/ic_bag_24"
+        android:title="@string/portfolio" />
+
+    <item
+        android:id="@+id/accountBtn"
+        android:icon="@drawable/ic_outline_account_circle_24"
+        android:title="@string/account" />
+
+</menu>

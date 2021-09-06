@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/dashboardFragment">
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.macamp.paperstock.ui.fragments.dashboard.DashboardFragment"
+        android:label="dashboard_fragment"
+        tools:layout="@layout/dashboard_fragment" />
+    <fragment
+        android:id="@+id/portfolioFragment"
+        android:name="com.macamp.paperstock.ui.fragments.portfolio.PortfolioFragment"
+        android:label="portfolio_fragment"
+        tools:layout="@layout/portfolio_fragment" />
+    <fragment
+        android:id="@+id/tradesFragment"
+        android:name="com.macamp.paperstock.ui.fragments.trades.TradesFragment"
+        android:label="trades_fragment"
+        tools:layout="@layout/trades_fragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.macamp.paperstock.ui.fragments.user.ProfileFragment"
+        android:label="profile_fragment"
+        tools:layout="@layout/profile_fragment" />
+</navigation>
