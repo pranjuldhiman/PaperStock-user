@@ -6,6 +6,7 @@
     tools:context=".ui.fragments.dashboard.DashboardFragment">
 
 <ImageView
+    android:id="@+id/imageVC"
     android:src="@drawable/no_found"
     android:scaleType="fitCenter"
     android:layout_width="match_parent"
