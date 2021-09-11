@@ -12,9 +12,22 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.macamp.paperstock.R
+import android.os.StrictMode
+import android.os.StrictMode.ThreadPolicy
+import android.view.View
+import com.google.gson.Gson
+import com.macamp.paperstock.data.NSERequest
+import com.macamp.paperstock.utils.Constants
+import org.java_websocket.client.WebSocketClient
+import org.java_websocket.handshake.ServerHandshake
+import timber.log.Timber
+import java.net.URI
+import javax.net.ssl.SSLSocketFactory
+
 
 class DashboardActivity : AppCompatActivity() {
-    lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    val policy by lazy { ThreadPolicy.Builder().permitAll().build() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +41,11 @@ class DashboardActivity : AppCompatActivity() {
         navController.graph = navGraph
 
         setupBottomNavMenu(navController = navController)
+
+//        val policy = ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+
+
 
 
         appBarConfiguration = AppBarConfiguration(
@@ -48,4 +66,5 @@ class DashboardActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         return findNavController(R.id.main_nav_host).navigateUp(appBarConfiguration)
     }
+
 }

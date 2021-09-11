@@ -3,5 +3,10 @@ package com.macamp.paperstock.ui.fragments.dashboard
 import androidx.lifecycle.ViewModel
 
 class DashboardViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
+
+    override fun onCleared() {
+        super.onCleared()
+    }
+
 }
