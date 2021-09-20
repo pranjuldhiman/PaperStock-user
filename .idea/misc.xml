@@ -3,11 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/green_bg.xml" value="0.2625" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.2625" />
+        <entry key="app/src/main/res/drawable/red_bg.xml" value="0.2625" />
+        <entry key="app/src/main/res/layout/active_pending_list.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/active_portfolio_fragment.xml" value="0.23229166666666667" />
+        <entry key="app/src/main/res/layout/active_trades_fragment.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.22395833333333334" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.23802083333333332" />
+        <entry key="app/src/main/res/layout/closed_portfolio_fragment.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/closed_trades_fragment.xml" value="0.23229166666666667" />
+        <entry key="app/src/main/res/layout/closed_trades_list.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/layout/dashboard_fragment.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/layout/login_fragment.xml" value="0.24583333333333332" />
+        <entry key="app/src/main/res/layout/mcx_future_fragment.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/nse_fragment.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/pending_trades_fragment.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/portfolio_fragment.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/profile_section_fragment.xml" value="0.24635416666666668" />
+        <entry key="app/src/main/res/layout/trades_fragment.xml" value="0.24635416666666668" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/xml/network_security_config.xml" value="0.24635416666666668" />
       </map>

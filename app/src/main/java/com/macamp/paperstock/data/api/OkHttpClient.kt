@@ -1,4 +1,4 @@
-package com.macamp.paperstock.data
+package com.macamp.paperstock.data.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

@@ -1,32 +1,29 @@
 package com.macamp.paperstock.ui.fragments.portfolio
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.macamp.paperstock.R
+import androidx.fragment.app.Fragment
+import com.macamp.paperstock.databinding.PortfolioFragmentBinding
 
 class PortfolioFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = PortfolioFragment()
-    }
-
+    private lateinit var binding: PortfolioFragmentBinding
     private lateinit var viewModel: PortfolioViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.portfolio_fragment, container, false)
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = PortfolioFragmentBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PortfolioViewModel::class.java)
-        // TODO: Use the ViewModel
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
 }

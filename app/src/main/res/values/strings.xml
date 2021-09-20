@@ -9,4 +9,15 @@
     <string name="trades">Trades</string>
     <string name="portfolio">Portfolio</string>
     <string name="account">Account</string>
+    <string name="nothing_here">Nothing here</string>
+    <string name="watchlist_txt">Use the search bar to add\n instruments to your watchlist</string>
+    <string name="marketWatch">Marketwatch</string>
+    <string name="close_active_trades_n_mcx">Close Active Trades\n MCX</string>
+    <string name="active">Active</string>
+    <string name="ledger_balance">Ledger Balance</string>
+    <string name="margin_balance">Margin Balance</string>
+    <string name="active_p_l">Active P/L</string>
+    <string name="search_add"><![CDATA[Search & Add]]></string>
+    <string name="spot_gold">SPOT GOLD</string>
+    <string name="spot_silver">SPOT SILVER</string>
 </resources>
