@@ -9,7 +9,6 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.macamp.paperstock.R
@@ -40,8 +39,8 @@ class DashboardActivity : AppCompatActivity() {
 //        val policy = ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return item.onNavDestinationSelected(navController)

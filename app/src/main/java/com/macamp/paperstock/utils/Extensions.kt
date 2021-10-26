@@ -5,6 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import org.slf4j.LoggerFactory
 import java.util.logging.Logger
 
@@ -22,3 +26,9 @@ fun Fragment.toast(msg:String){
     Toast.makeText(requireActivity(), msg, Toast.LENGTH_SHORT).show()
 }
 
+fun CoroutineScope.launchPeriodicAsync(repeatMillis: Long, action: () -> Unit) = this.async {
+    while (isActive) {
+        action()
+        delay(repeatMillis)
+    }
+}

@@ -10,25 +10,28 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.macamp.paperstock.BuildConfig
 import com.macamp.paperstock.R
 import com.macamp.paperstock.adapter.ViewpagerAdapter
+import com.macamp.paperstock.data.api.Status
 import com.macamp.paperstock.databinding.DashboardFragmentBinding
-import com.macamp.paperstock.utils.Constants.WEB_SOCKET_URL
-import org.java_websocket.client.WebSocketClient
-import org.java_websocket.handshake.ServerHandshake
+import com.macamp.paperstock.utils.launchPeriodicAsync
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import timber.log.Timber
-import java.net.URI
-import javax.net.ssl.SSLSocketFactory
+import java.util.concurrent.TimeUnit
 
 
 class DashboardFragment : Fragment() {
-    private lateinit var webSocketClient: WebSocketClient
-    private lateinit var viewModel: DashboardViewModel
+    private val mainViewModel: DashboardViewModel by lazy {
+        ViewModelProvider(this)[DashboardViewModel::class.java]
+    }
+//    private lateinit var viewModel: WebSocketViewModel
 
     private lateinit var binding: DashboardFragmentBinding
     private var isShowing: Boolean = false
-
+//    private var webSocketHashMap: HashMap<String, WebSocketData> = HashMap()
+    private lateinit var fetchDatesTimer: Deferred<Unit>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
@@ -42,10 +45,11 @@ class DashboardFragment : Fragment() {
         setUpViewPagerViewTabs()
 
         onClicks()
-        initWebSocket()
+
 //        binding.imageVC.setOnClickListener { initWebSocket() }
 
     }
+
 
     private fun onClicks() {
 
@@ -68,8 +72,32 @@ class DashboardFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        webSocketClient.close()
     }
+
+
+//    private fun observers() {
+//        viewModel.getWebSocketData().observe(viewLifecycleOwner) {
+//            it.let { stockData ->
+//                webSocketHashMap[stockData.trade?.get(0).toString()] = stockData
+//
+//                webSocketHashMap.forEach { (name, data) ->
+//                    Timber.e(data.trade?.get(0))
+//                }
+//            }
+//            Timber.e("observers: ${webSocketHashMap.size}")
+//        }
+//
+//        viewModel.historyData.observe(viewLifecycleOwner) {
+//            it?.let { historySocketData ->
+//                Timber.e("EMMITER ${historySocketData.symbollist[0][0]}")
+//
+//            }
+//        }
+//        viewModel.checkData.observe(viewLifecycleOwner) {
+//            Timber.e(it)
+//        }
+//    }
+
 
     private fun setUpViewPagerViewTabs() {
 
@@ -90,39 +118,9 @@ class DashboardFragment : Fragment() {
 
     }
 
-    private fun createWebSocketClient(coinbaseUri: URI?) {
-        webSocketClient = object : WebSocketClient(coinbaseUri) {
-
-            override fun onOpen(handshakedata: ServerHandshake?) {
-                Timber.e("onOpen")
-
-                subscribe()
-            }
-
-            override fun onMessage(message: String?) {
-
-                Timber.e("onMessage: $message")
-//                setUpBtcPriceText(message)
-            }
-
-            override fun onClose(code: Int, reason: String?, remote: Boolean) {
-                Timber.e("onClose: ")
-
-//                unsubscribe()
-            }
-
-            override fun onError(ex: Exception?) {
-                Timber.e("onError:${ex?.message}")
-
-            }
-
-        }
-    }
 
     private fun subscribe() {
-        webSocketClient.send(
-            "{\"method\":\"addsymbol\",\"symbols\":[\"GOLD-I\",\"GOLDM-I\",\"COPPER-I\",\"ALUMINI-I\",\"CRUDEOIL-I\",\"LEAD-I\",\"NATURALGAS-I\",\"SILVER-I\"]}")
-//  webSocketClient.send(
+        //  webSocketClient.send(
 //            "{\"method\":\"addsymbol\",\"symbols\":[\"GOLD-I\"]}")
 
 //        webSocketClient.send("{\"method\":\"addsymbol\",\"symbols\":[\"NIFTY-I\"]}")
@@ -136,21 +134,46 @@ class DashboardFragment : Fragment() {
 //    }
 
 
-    private fun initWebSocket() {
-        val coinbaseUri = URI(WEB_SOCKET_URL)
-
-        createWebSocketClient(coinbaseUri)
-        val socketFactory: SSLSocketFactory = SSLSocketFactory.getDefault() as SSLSocketFactory
-        webSocketClient.setSocketFactory(socketFactory)
-        webSocketClient.connect()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
         binding = DashboardFragmentBinding.inflate(layoutInflater, container, false)
+//        viewModel.initWebSocket()
+//        observers()
+        attachObservers()
         return binding.root
+    }
+
+    private fun attachObservers() {
+        fetchDatesTimer = CoroutineScope(Dispatchers.IO)
+            .launchPeriodicAsync(TimeUnit.MINUTES.toMillis(1000)) {
+                mainViewModel.getLiveStocks().observe(viewLifecycleOwner) {
+                    it?.let {
+                        when (it.status) {
+                            Status.LOADING -> {
+                            }
+                            Status.ERROR -> {
+                            }
+                            Status.SUCCESS -> {
+                                it.data?.let { data ->
+                                    Timber.e("Stock active Data ${data.body()?.message}")
+                                }
+
+
+                            }
+
+                        }
+                    }
+                }
+            }
+
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        fetchDatesTimer.cancel()
     }
 
 }

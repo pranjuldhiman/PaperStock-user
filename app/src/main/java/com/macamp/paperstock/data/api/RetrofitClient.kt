@@ -9,7 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    private val baseURL = "https://traderappp.herokuapp.com/${Constants.APP_TYPE}/"
+    private const val baseURL = "https://traderappp.herokuapp.com/${Constants.APP_TYPE}/"
+    private const val productionURL = "http://34.226.121.217/api/"
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
@@ -19,16 +20,31 @@ object RetrofitClient {
             .build()
     }
 
-     val apiService: ApiService by lazy {
+    val apiService: ApiService by lazy {
         Retrofit.Builder()
             .client(okHttpClient)
             .baseUrl(baseURL)
             .addConverterFactory(
                 GsonConverterFactory.create(
-                GsonBuilder()
-                    .setLenient()
-                    .create()
-            ))
+                    GsonBuilder()
+                        .setLenient()
+                        .create()
+                )
+            )
+            .build().create(ApiService::class.java)
+    }
+
+    val apiMainService: ApiService by lazy {
+        Retrofit.Builder()
+            .client(okHttpClient)
+            .baseUrl(productionURL)
+            .addConverterFactory(
+                GsonConverterFactory.create(
+                   /* GsonBuilder()
+                        .setLenient()
+                        .create()*/
+                )
+            )
             .build().create(ApiService::class.java)
     }
 
