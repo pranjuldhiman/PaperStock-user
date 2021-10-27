@@ -11,14 +11,16 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
     private const val baseURL = "https://traderappp.herokuapp.com/${Constants.APP_TYPE}/"
     private const val productionURL = "http://34.226.121.217/api/"
+    private const val jsonURL = "http://jsonplaceholder.typicode.com/posts"
 
-    private val okHttpClient: OkHttpClient by lazy {
+    val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .readTimeout(20, TimeUnit.SECONDS)
             .connectTimeout(20, TimeUnit.SECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build()
     }
+
 
     val apiService: ApiService by lazy {
         Retrofit.Builder()

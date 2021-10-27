@@ -13,13 +13,11 @@ import com.macamp.paperstock.adapter.ViewpagerAdapter
 import com.macamp.paperstock.data.api.Status
 import com.macamp.paperstock.databinding.DashboardFragmentBinding
 import com.macamp.paperstock.utils.launchPeriodicAsync
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
-
+@InternalCoroutinesApi
 class DashboardFragment : Fragment() {
     private val mainViewModel: DashboardViewModel by lazy {
         ViewModelProvider(this)[DashboardViewModel::class.java]
@@ -28,8 +26,9 @@ class DashboardFragment : Fragment() {
 
     private lateinit var binding: DashboardFragmentBinding
     private var isShowing: Boolean = false
-//    private var webSocketHashMap: HashMap<String, WebSocketData> = HashMap()
-    private lateinit var fetchDatesTimer: Deferred<Unit>
+
+    //    private var webSocketHashMap: HashMap<String, WebSocketData> = HashMap()
+    private lateinit var fetchDatesTimer: Job
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (BuildConfig.DEBUG) {
@@ -41,9 +40,10 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        attachObservers()
+
 
         setUpViewPagerViewTabs()
-
         onClicks()
 
 //        binding.imageVC.setOnClickListener { initWebSocket() }
@@ -141,13 +141,19 @@ class DashboardFragment : Fragment() {
         binding = DashboardFragmentBinding.inflate(layoutInflater, container, false)
 //        viewModel.initWebSocket()
 //        observers()
-        attachObservers()
         return binding.root
     }
 
     private fun attachObservers() {
-        fetchDatesTimer = CoroutineScope(Dispatchers.IO)
-            .launchPeriodicAsync(TimeUnit.MINUTES.toMillis(1000)) {
+
+        fetchDatesTimer = startRepeatingJob(1000)
+
+    }
+
+    private fun startRepeatingJob(timeInterval: Long): Job {
+        return MainScope().launch {
+            while (NonCancellable.isActive) {
+                // add your task here
                 mainViewModel.getLiveStocks().observe(viewLifecycleOwner) {
                     it?.let {
                         when (it.status) {
@@ -160,20 +166,24 @@ class DashboardFragment : Fragment() {
                                     Timber.e("Stock active Data ${data.body()?.message}")
                                 }
 
-
                             }
 
                         }
                     }
                 }
+                delay(timeInterval)
             }
-
-
+        }
     }
 
+    override fun onPause() {
+        super.onPause()
+        fetchDatesTimer.cancel()
+
+    }
     override fun onDestroy() {
         super.onDestroy()
-//        fetchDatesTimer.cancel()
+        fetchDatesTimer.cancel()
     }
 
 }

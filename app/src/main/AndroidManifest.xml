@@ -4,6 +4,7 @@
     package="com.macamp.paperstock">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".PaperStockApp"
         android:allowBackup="true"

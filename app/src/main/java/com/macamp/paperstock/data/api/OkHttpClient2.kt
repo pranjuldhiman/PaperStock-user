@@ -8,7 +8,7 @@ import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.net.ssl.*
 
-object OkHttpClient {
+object OkHttpClient2 {
 
 
 

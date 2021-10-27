@@ -1,30 +1,23 @@
 package com.macamp.paperstock.ui.fragments.dashboard
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
-import com.macamp.paperstock.data.LoginRequest
+import com.macamp.paperstock.data.api.ApiService.Companion.apiService
 import com.macamp.paperstock.data.api.Resource
-import com.macamp.paperstock.data.api.RetrofitClient
-import com.macamp.paperstock.data.model.StocksModel
+import com.macamp.paperstock.data.api.RetrofitClient.apiMainService
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
 
 class DashboardViewModel : ViewModel() {
 
-    val api = RetrofitClient.apiMainService
-
+//    val api = RetrofitClient2.apiClient()?.create(ApiService::class.java)
     fun getLiveStocks() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(api.getStocksLiveData()))
+            emit(Resource.success(apiMainService.getStocksLiveData()))
         } catch (e: Exception) {
             emit(Resource.error(data = null, message = "Error Occurred!"))
 
         }
-
     }
 }
 
